@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "974240769586",
+    "project_id": "teamx-fbe3a",
+    "storage_bucket": "teamx-fbe3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974240769586:android:44576ad0c66ff1abb2be2b",
+        "android_client_info": {
+          "package_name": "com.teamxdevelopers.teamx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974240769586-rfggt76bpdal5n2h0f3pm748gpie84fp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2HmKGGwBkpG8UwR3J64FHPIX3y5KMims"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974240769586-rfggt76bpdal5n2h0f3pm748gpie84fp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

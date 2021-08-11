@@ -16,6 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
+import com.teamxdevelopers.teamx.R
 import com.teamxdevelopers.teamx.data.ScreenState
 import com.teamxdevelopers.teamx.ui.main.PostPlaceholder
 import com.teamxdevelopers.teamx.ui.main.SearchBar
@@ -47,6 +48,7 @@ class SearchActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_BloggerAPI)
 
         setContent {
 

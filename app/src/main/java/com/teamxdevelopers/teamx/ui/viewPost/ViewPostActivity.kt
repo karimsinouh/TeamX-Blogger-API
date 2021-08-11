@@ -10,6 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.ads.AdRequest
+import com.teamxdevelopers.teamx.R
 import com.teamxdevelopers.teamx.database.saved.SavedParcelable
 import com.teamxdevelopers.teamx.ui.theme.BloggerAPITheme
 import com.teamxdevelopers.teamx.utils.Banner
@@ -31,6 +32,7 @@ class ViewPostActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_BloggerAPI)
 
         intent.getStringExtra("postId")?.let { _postId->
             postId=_postId

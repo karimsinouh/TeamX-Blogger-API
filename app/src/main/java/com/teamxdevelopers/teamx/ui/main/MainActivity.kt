@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setTheme(R.style.Theme_BloggerAPI)
         adRequest=AdRequest.Builder().build()
 
         setContent {

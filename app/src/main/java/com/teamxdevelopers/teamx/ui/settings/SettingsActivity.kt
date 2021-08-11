@@ -46,8 +46,8 @@ class SettingsActivity:ComponentActivity() {
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_BloggerAPI)
         setContent {
-
 
             BloggerAPITheme(vm.darkThemeEnabled.value){
 

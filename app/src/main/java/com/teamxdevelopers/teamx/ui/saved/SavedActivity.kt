@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.coil.rememberCoilPainter
+import com.teamxdevelopers.teamx.R
 import com.teamxdevelopers.teamx.database.saved.Saved
 import com.teamxdevelopers.teamx.ui.theme.BloggerAPITheme
 import com.teamxdevelopers.teamx.utils.ConnectivityUtility
@@ -60,6 +61,7 @@ class SavedActivity:ComponentActivity() {
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_BloggerAPI)
 
         setContent {
 

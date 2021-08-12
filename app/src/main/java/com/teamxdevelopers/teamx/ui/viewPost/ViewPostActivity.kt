@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.lifecycleScope
+import androidx.webkit.WebSettingsCompat
 import com.google.android.gms.ads.AdRequest
 import com.teamxdevelopers.teamx.R
 import com.teamxdevelopers.teamx.database.saved.SavedParcelable
@@ -58,7 +60,7 @@ class ViewPostActivity: ComponentActivity() {
                         if (post==null && postId!=null)
                             CenterProgress()
                         else if (postId==null)
-                            WebComposable(data = savedPost.content)
+                            WebComposable(data = savedPost.content,darkTheme.isEnabled())
                         else{
 
                             val saved=vm.exists(post?.id!!).observeAsState(false)
@@ -75,7 +77,7 @@ class ViewPostActivity: ComponentActivity() {
                                 it.loadAd(adRequest)
                             }
 
-                            WebComposable(data = post.content)
+                            WebComposable(data = post.content,darkTheme.isEnabled())
                         }
                     }
 

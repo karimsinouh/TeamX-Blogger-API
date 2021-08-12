@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.webkit.WebSettingsCompat
 import com.teamxdevelopers.teamx.R
 
 @Composable
@@ -44,7 +45,7 @@ fun ViewPostTopBAr(
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebComposable(data:String){
+fun WebComposable(data:String,darkTheme:Boolean){
     return AndroidView(
         factory = {context->
             WebView(context).apply {
@@ -56,8 +57,14 @@ fun WebComposable(data:String){
                 webViewClient=object : WebViewClient(){}
                 webChromeClient=object : WebChromeClient(){}
 
-
                 loadDataWithBaseURL(null,data,"text/html", "UTF-8",null)
+
+                if(darkTheme){
+                    WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
+                }else{
+                    WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_AUTO)
+
+                }
 
             }
         },

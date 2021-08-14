@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebSettingsCompat.setForceDark
+import androidx.webkit.WebViewFeature
 import com.teamxdevelopers.teamx.R
 
 @Composable
@@ -59,12 +61,13 @@ fun WebComposable(data:String,darkTheme:Boolean){
 
                 loadDataWithBaseURL(null,data,"text/html", "UTF-8",null)
 
-                if(darkTheme){
-                    WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
-                }else{
-                    WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_AUTO)
 
-                }
+
+                if(WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK))
+                    if(darkTheme)
+                        setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
+                    else
+                        setForceDark(settings, WebSettingsCompat.FORCE_DARK_AUTO)
 
             }
         },

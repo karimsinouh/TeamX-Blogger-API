@@ -138,9 +138,16 @@ class MainActivity : ComponentActivity() {
             !it.seen
         }
 
-        TopBar(unSeenNotifications.isNotEmpty()){
-            scope.launch {
-                scaffoldState.drawerState.open()
+        Column {
+            TopBar(unSeenNotifications.isNotEmpty()){
+                scope.launch {
+                    scaffoldState.drawerState.open()
+                }
+            }
+
+            vm.categories.let {
+                if (it.isNotEmpty())
+                    CategoriesTabs()
             }
         }
     }
@@ -151,6 +158,8 @@ class MainActivity : ComponentActivity() {
     private fun Content(){
         LazyColumn {
 
+
+            //search
             item {
                 Box(modifier = Modifier.padding(8.dp)){
                     SearchBar(
@@ -179,17 +188,14 @@ class MainActivity : ComponentActivity() {
 
                         if (posts.isNotEmpty()){
 
-                            stickyHeader {
-                                StickyHeader("Posts")
-                            }
+                            //stickyHeader { StickyHeader("Posts") }
 
                             item { Pager() }
 
-                            stickyHeader {
-                                StickyHeader(text = "Latest Posts")
-                            }
+                            //stickyHeader { StickyHeader(text = "Latest Posts") }
 
-                            itemsIndexed(posts){index,item ->
+
+                            itemsIndexed(vm.filteredPosts()){index,item ->
 
                                 PostItem(item){
                                     interstitial?.show(this@MainActivity)
@@ -222,6 +228,25 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+
+    @Composable
+    private fun CategoriesTabs(){
+        val selectedIndex=vm.selectedCategory.value
+        ScrollableTabRow(
+            selectedTabIndex = selectedIndex,
+            contentColor = MaterialTheme.colors.onBackground,
+            backgroundColor = MaterialTheme.colors.background
+        ) {
+            vm.categories.forEachIndexed{ index, category->
+                Tab(selected = selectedIndex==index, onClick = {
+                    vm.selectedCategory.value=index
+                }) {
+                    Text(text = category,modifier = Modifier.padding(12.dp))
+                }
+            }
+        }
+    }
+
 
     @ExperimentalPagerApi
     @Composable

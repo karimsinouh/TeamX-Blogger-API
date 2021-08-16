@@ -91,19 +91,7 @@ fun WebComposable(data:String,darkTheme:Boolean){
 fun PostDetails(post:Post){
     Column {
 
-        /*
-        val painter= rememberCoilPainter(request = post.getThumbnail())
 
-        Image(
-            painter =painter,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier= Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-        )
-
-         */
 
         Column(modifier = Modifier.padding(12.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(

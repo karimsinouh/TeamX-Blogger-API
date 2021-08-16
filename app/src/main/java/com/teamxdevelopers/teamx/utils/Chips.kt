@@ -28,8 +28,8 @@ fun Chip(text:String,colored: Boolean=false,onClick:(String)->Unit){
         modifier = Modifier
             .clip(MaterialTheme.shapes.medium)
             .background(backgroundColor)
-            .padding(4.dp)
             .clickable { onClick(text) }
+            .padding(4.dp)
     )
 
 }

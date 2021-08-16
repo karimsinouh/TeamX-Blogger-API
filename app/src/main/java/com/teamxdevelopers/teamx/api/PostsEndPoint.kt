@@ -35,6 +35,19 @@ class PostsEndPoint @Inject constructor(
 
     }
 
+    suspend fun getThreePosts(listener:(List<Post>)->Unit){
+        val url="${BASE_URL}posts?key=$API_KEY&fetchImages=true&maxResults=3"
+
+        if (ConnectivityUtility.hasInternet(context))
+            try{
+                val response=client.get<ResponsePage<Post>>(url)
+                listener(response.items?: emptyList())
+            }catch (e:IOException){
+                Log.d("PostsEndPoint",e.message!!)
+            }
+
+    }
+
     suspend fun search(q:String,listener: (List<Post>) -> Unit){
         val url="${BASE_URL}posts/search?q=$q&key=$API_KEY&fetchImages=true"
         val response=client.get<ResponsePage<Post>>(url)

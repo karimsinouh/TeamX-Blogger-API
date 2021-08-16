@@ -42,6 +42,7 @@ fun CenterProgress(
 @Composable
 fun Context.PostItem(
     item:Post,
+    posts:List<Post>?=null,
     onClick: (() -> Unit)
 ){
 

@@ -2,6 +2,8 @@ package com.teamxdevelopers.teamx.data
 
 import android.content.Context
 import android.content.Intent
+import android.os.Parcel
+import android.os.Parcelable
 import com.teamxdevelopers.teamx.database.notifications.Notifications
 import com.teamxdevelopers.teamx.database.saved.Saved
 import com.teamxdevelopers.teamx.ui.viewPost.ViewPostActivity
@@ -14,7 +16,7 @@ data class Post(
     val url:String,
     val title:String,
     val content:String,
-    val images:List<PostImage>?=null,
+    val images:Array<PostImage>?=null,
     val labels:List<String>?=null
 ){
 
@@ -35,10 +37,6 @@ data class Post(
         c.startActivity(intent)
     }
 
-    fun asSavedPost():Saved
-    = Saved(title,getThumbnail(),id,published,content,0)
-
-    fun asNotification():Notifications
-    = Notifications(title,getThumbnail(),id,false,0)
+    fun asSavedPost():Saved = Saved(title,getThumbnail(),id,published,content,0)
 
 }

@@ -1,5 +1,6 @@
 package com.teamxdevelopers.teamx.ui.viewPost
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import com.teamxdevelopers.teamx.api.PostsEndPoint
 import com.teamxdevelopers.teamx.data.Post
 import com.teamxdevelopers.teamx.database.Database
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,10 +19,17 @@ class ViewPostViewModel @Inject constructor(
 ):ViewModel() {
 
     val post= mutableStateOf<Post?>(null)
+    val posts= mutableStateListOf<Post>()
 
     suspend fun loadPost(postId:String){
         api.getPost(postId){
             post.value=it
+
+        }
+        delay(500)
+        api.getThreePosts {
+            posts.clear()
+            posts.addAll(it)
         }
     }
 

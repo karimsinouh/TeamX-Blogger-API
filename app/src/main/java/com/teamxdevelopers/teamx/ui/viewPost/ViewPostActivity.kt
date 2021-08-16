@@ -8,10 +8,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.toArgb
@@ -19,13 +17,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.webkit.WebSettingsCompat
 import com.google.android.gms.ads.AdRequest
 import com.teamxdevelopers.teamx.R
+import com.teamxdevelopers.teamx.data.Post
 import com.teamxdevelopers.teamx.database.saved.SavedParcelable
 import com.teamxdevelopers.teamx.ui.main.StickyHeader
 import com.teamxdevelopers.teamx.ui.theme.BloggerAPITheme
-import com.teamxdevelopers.teamx.utils.Banner
-import com.teamxdevelopers.teamx.utils.CenterProgress
-import com.teamxdevelopers.teamx.utils.DarkTheme
-import com.teamxdevelopers.teamx.utils.StickyHeaderText
+import com.teamxdevelopers.teamx.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -53,6 +49,8 @@ class ViewPostActivity: ComponentActivity() {
                     vm.loadPost(_postId)
                 }
         }
+
+
 
         intent.getParcelableExtra<SavedParcelable>("savedPost")?.let {
             savedPost=it
@@ -136,11 +134,14 @@ class ViewPostActivity: ComponentActivity() {
             }
 
             stickyHeader {
-                StickyHeader(text = "Comments")
+                StickyHeader(text = "More Posts")
             }
 
-            items(5){
-                StickyHeader(text ="heyy")
+            items(vm.posts){item->
+                PostItem(item = item) {
+
+                }
+                Divider()
             }
 
         }

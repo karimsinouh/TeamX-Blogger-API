@@ -22,7 +22,6 @@ class MainViewModel @Inject constructor(
 
     var pageToken:String?=""
     val darkThemeEnabled= mutableStateOf(false)
-    val query= mutableStateOf("")
     val posts= mutableStateListOf<Post>()
     val state= mutableStateOf(ScreenState.LOADING)
     val notifications= db.notifications().getAllNotifications()
@@ -57,6 +56,8 @@ class MainViewModel @Inject constructor(
     }
 
     private fun extractCategories()=viewModelScope.launch{
+        categories.clear()
+        categories.add("All")
         posts.forEach { post->
             post.labels().forEach { label->
                 if (!categories.contains(label))
@@ -65,7 +66,13 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun filteredPosts()=posts.filter {
+    fun filteredPosts():List<Post>{
+        val category=selectedCategory.value
+        return if(category==0)
+            posts
+        else
+        posts.filter {
             it.labels().contains(categories[selectedCategory.value])
         }
+    }
 }

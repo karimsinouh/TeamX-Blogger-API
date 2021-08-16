@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
@@ -160,6 +161,7 @@ class MainActivity : ComponentActivity() {
 
 
             //search
+            /*
             item {
                 Box(modifier = Modifier.padding(8.dp)){
                     SearchBar(
@@ -173,6 +175,8 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
+
+             */
 
             val state=vm.state.value
 
@@ -235,13 +239,23 @@ class MainActivity : ComponentActivity() {
         ScrollableTabRow(
             selectedTabIndex = selectedIndex,
             contentColor = MaterialTheme.colors.onBackground,
-            backgroundColor = MaterialTheme.colors.background
+            backgroundColor = MaterialTheme.colors.background,
+            indicator = {position->
+                TabRowDefaults.Indicator(
+                    Modifier.tabIndicatorOffset(position[selectedIndex]),
+                    color = MaterialTheme.colors.primary
+                )
+            }
         ) {
+
+
             vm.categories.forEachIndexed{ index, category->
-                Tab(selected = selectedIndex==index, onClick = {
+                val isSelected=selectedIndex==index
+                val color=if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.onBackground
+                Tab(selected = isSelected, onClick = {
                     vm.selectedCategory.value=index
                 }) {
-                    Text(text = category,modifier = Modifier.padding(12.dp))
+                    Text(text = category,modifier = Modifier.padding(12.dp),color=color)
                 }
             }
         }

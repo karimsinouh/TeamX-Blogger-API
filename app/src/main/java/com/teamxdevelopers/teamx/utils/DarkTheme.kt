@@ -15,7 +15,7 @@ class DarkTheme @Inject constructor(
     private val prefs=context.getSharedPreferences("dark_prefs",Context.MODE_PRIVATE)
 
     fun isEnabled():Boolean{
-        return prefs.getBoolean("enabled",false)
+        return prefs.getBoolean("enabled",true)
     }
 
     fun setValue(value:Boolean){

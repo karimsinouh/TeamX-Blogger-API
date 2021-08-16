@@ -10,12 +10,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.teamxdevelopers.teamx.R
 import com.teamxdevelopers.teamx.data.ScreenState
 import com.teamxdevelopers.teamx.ui.main.PostPlaceholder
@@ -93,16 +96,35 @@ class SearchActivity : ComponentActivity() {
 
     @Composable
     private fun SearchSection() {
-        Box(modifier= Modifier
-            .fillMaxWidth()
-            .padding(12.dp)){
-            SearchBar(value = vm.query.value, onValueChange = {
-                vm.query.value=it
-            }) {
-                scope.launch {
-                    vm.search()
+
+        Column {
+
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = { finish() }) {
+                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                    }
+                },
+                title = {
+                    Text(text = "Search",fontSize = 18.sp)
+                },
+                contentColor = MaterialTheme.colors.onSurface,
+                backgroundColor = MaterialTheme.colors.background,
+                elevation = 0.dp,
+            )
+
+            Box(modifier= Modifier
+                .fillMaxWidth()
+                .padding(12.dp)){
+                SearchBar(value = vm.query.value, onValueChange = {
+                    vm.query.value=it
+                }) {
+                    scope.launch {
+                        vm.search()
+                    }
                 }
             }
+
         }
     }
 

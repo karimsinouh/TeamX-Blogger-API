@@ -54,7 +54,8 @@ fun ViewPostTopBAr(
 
             }
 
-        }
+        },
+        elevation = 0.dp,
     )
 }
 
@@ -80,7 +81,12 @@ fun WebComposable(data:String,darkTheme:Boolean){
 
                 Log.d("wtf_data",data)
                 val editedData=if(darkTheme)
-                    data.replace("white","#121212").replace("#222222","#ffffff")
+                    data.replace("white","#121212")
+                        .replace("#222222","#ffffff")
+                        .replace("#333333","#ffffff")
+                        .replace("#111111","#ffffff")
+                        .replace("#44444","#ffffff")
+                        .replace("#000000","#ffffff")
                 else
                     data
 

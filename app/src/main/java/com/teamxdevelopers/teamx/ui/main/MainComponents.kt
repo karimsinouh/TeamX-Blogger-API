@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Search
@@ -32,6 +33,7 @@ import com.teamxdevelopers.teamx.R
 import com.teamxdevelopers.teamx.data.Post
 import com.teamxdevelopers.teamx.ui.notifications.NotificationsActivity
 import com.teamxdevelopers.teamx.ui.saved.SavedActivity
+import com.teamxdevelopers.teamx.ui.search.SearchActivity
 
 
 @Composable
@@ -68,11 +70,17 @@ fun TopBar(
                 else
                     Icon(Icons.Outlined.Notifications,null)
             }
+            Spacer(modifier = Modifier.width(8.dp))
 
             IconButton(onClick = {
                 SavedActivity.open(context)
             }) {
                 Icon(painter = painterResource(id = R.drawable.ic_bookmark_outlined),null)
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+            IconButton(onClick = { SearchActivity.open(context) }) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null)
             }
         },
         navigationIcon = {

@@ -120,6 +120,12 @@ class ViewPostActivity: ComponentActivity() {
     private fun Content(){
         LazyColumn{
 
+            item {
+                vm.post.value?.let {post->
+                    PostDetails(post)
+                }
+            }
+
             item{
                 vm.post.value.let {post->
                     if(post==null)

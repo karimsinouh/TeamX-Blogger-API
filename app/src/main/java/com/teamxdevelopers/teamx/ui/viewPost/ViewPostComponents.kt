@@ -5,10 +5,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
@@ -25,7 +22,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebSettingsCompat.setForceDark
 import androidx.webkit.WebViewFeature
+import com.google.accompanist.coil.rememberCoilPainter
 import com.teamxdevelopers.teamx.R
+import com.teamxdevelopers.teamx.data.Post
+import com.teamxdevelopers.teamx.utils.ChipsList
 
 @Composable
 fun ViewPostTopBAr(
@@ -86,12 +86,13 @@ fun WebComposable(data:String,darkTheme:Boolean){
 }
 
 
-@Preview(showBackground = true)
+
 @Composable
-fun PostDetails(){
+fun PostDetails(post:Post){
     Column {
 
-        val painter= painterResource(id = R.drawable.material)
+        /*
+        val painter= rememberCoilPainter(request = post.getThumbnail())
 
         Image(
             painter =painter,
@@ -101,11 +102,23 @@ fun PostDetails(){
                 .fillMaxWidth()
                 .height(200.dp)
         )
-        Text(
-            text = "Hot to sell those books you got from your parents as a kid",
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-        )
-        Text(text = "2 days ago")
+
+         */
+
+        Column(modifier = Modifier.padding(12.dp),verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                text = post.title,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+            )
+            Text(text = post.published)
+
+            ChipsList(
+                chips = post.labels(),
+                colored=false,
+                onChipClick = {}
+            )
+        }
+
     }
 }

@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.teamxdevelopers.teamx.data.Post
 import com.teamxdevelopers.teamx.ui.main.BLogPost
-import com.teamxdevelopers.teamx.ui.main.BLogPostSmall
 
 
 @Composable
@@ -55,8 +54,8 @@ fun Context.PostItem(
             }
         )
     else
-        BLogPostSmall(item){
-            onClick
+        BLogPost(item){
+            onClick()
             item.view(this)
         }
 }

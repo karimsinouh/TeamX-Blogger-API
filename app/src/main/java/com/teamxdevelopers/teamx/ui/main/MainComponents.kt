@@ -166,49 +166,6 @@ fun BLogPost(
 }
 
 @Composable
-fun BLogPostSmall(
-    post:Post,
-    onClick: () -> Unit
-){
-
-    val painter= rememberCoilPainter(request =post.getThumbnail())
-
-    Row(
-        modifier= Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Image(
-            painter = painter,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .height(100.dp)
-                .width(140.dp),
-        )
-
-        Column {
-            Text(
-                text=post.title,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                maxLines = 3
-            )
-
-            Text(
-                text=post.published,
-                color=MaterialTheme.colors.onBackground.copy(alpha = 0.8f),
-                fontSize = 12.sp
-            )
-        }
-
-    }
-}
-
-@Composable
 fun StickyHeader(text:String) {
     Text(
         text=text,
@@ -258,8 +215,8 @@ fun PostPager(
     Box(
         modifier= Modifier
             .padding(12.dp)
-            .width(320.dp)
-            .height(150.dp)
+            .fillMaxWidth()
+            .height(190.dp)
             .clip(RoundedCornerShape(12.dp))
             .clickable(onClick = onClick)
     ){

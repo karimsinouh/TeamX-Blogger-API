@@ -1,16 +1,19 @@
 package com.teamxdevelopers.teamx.ui.viewPost
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,9 +61,14 @@ fun ViewPostTopBAr(
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebComposable(data:String,darkTheme:Boolean){
+
+    val color=MaterialTheme.colors.background.toArgb()
+
     return AndroidView(
         factory = {context->
             WebView(context).apply {
+
+                setBackgroundColor(color)
                 settings.javaScriptEnabled=true
 
                 settings.domStorageEnabled=true
@@ -69,19 +77,25 @@ fun WebComposable(data:String,darkTheme:Boolean){
                 webViewClient=object : WebViewClient(){}
                 webChromeClient=object : WebChromeClient(){}
 
-                loadDataWithBaseURL(null,data,"text/html", "UTF-8",null)
 
+                Log.d("wtf_data",data)
+                val editedData=if(darkTheme)
+                    data.replace("white","#121212").replace("#222222","#ffffff")
+                else
+                    data
 
+                loadDataWithBaseURL(null,editedData,"text/html", "UTF-8",null)
 
+                /*
                 if(WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK))
                     if(darkTheme)
                         setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
                     else
                         setForceDark(settings, WebSettingsCompat.FORCE_DARK_AUTO)
-
+                        */
             }
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background)
     )
 }
 

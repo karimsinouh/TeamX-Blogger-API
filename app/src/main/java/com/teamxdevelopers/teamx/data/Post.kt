@@ -15,7 +15,13 @@ data class Post(
     val title:String,
     val content:String,
     val images:List<PostImage>?=null,
+    val labels:List<String>?=null
 ){
+
+    fun labels():List<String>{
+        return labels ?: emptyList()
+    }
+
     fun getThumbnail():String{
         return if (images!=null)
             images[0].url

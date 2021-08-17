@@ -34,6 +34,7 @@ import com.teamxdevelopers.teamx.data.Post
 import com.teamxdevelopers.teamx.ui.notifications.NotificationsActivity
 import com.teamxdevelopers.teamx.ui.saved.SavedActivity
 import com.teamxdevelopers.teamx.ui.search.SearchActivity
+import com.teamxdevelopers.teamx.utils.Chip
 
 
 @Composable
@@ -62,6 +63,13 @@ fun TopBar(
     TopAppBar(
         title={ Text(stringResource(R.string.app_name)) },
         actions = {
+
+            IconButton(onClick = { SearchActivity.open(context) }) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
             IconButton(onClick = {
                 NotificationsActivity.open(context)
             }) {
@@ -78,10 +86,6 @@ fun TopBar(
                 Icon(painter = painterResource(id = R.drawable.ic_bookmark_outlined),null)
             }
 
-            Spacer(modifier = Modifier.width(8.dp))
-            IconButton(onClick = { SearchActivity.open(context) }) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = null)
-            }
         },
         navigationIcon = {
             IconButton(onNavigation) {
@@ -138,7 +142,6 @@ fun BLogPost(
     post:Post,
     onClick:()->Unit
 ){
-    val imagePainter= rememberCoilPainter(request = post.getThumbnail())
 
     Column(
         modifier= Modifier
@@ -147,15 +150,7 @@ fun BLogPost(
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Image(
-            painter = imagePainter,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .height(190.dp)
-                .fillMaxWidth(),
-        )
+        PostThumbnail(url = post.getThumbnail(),post.getLabel())
 
         Text(
             text=post.title,
@@ -171,6 +166,32 @@ fun BLogPost(
         )
 
     }
+}
+
+@Composable
+fun PostThumbnail(url:String,label:String) {
+    val imagePainter= rememberCoilPainter(url)
+
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(12.dp))
+            .height(190.dp)
+            .fillMaxWidth(),
+    ) {
+        Image(
+            painter = imagePainter,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+        Box(modifier = Modifier
+            .padding(8.dp)
+            .align(Alignment.TopStart)){
+            Chip(text = label,colored = true){}
+        }
+    }
+
+
 }
 
 @Composable
@@ -218,8 +239,6 @@ fun PostPager(
     onClick: () -> Unit
 ){
 
-    val painter= rememberCoilPainter(request = post.getThumbnail())
-
     Box(
         modifier= Modifier
             .padding(12.dp)
@@ -229,12 +248,7 @@ fun PostPager(
             .clickable(onClick = onClick)
     ){
 
-        Image(
-            painter = painter,
-            contentDescription =null,
-            modifier=Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        PostThumbnail(url = post.getThumbnail(), label = post.getLabel())
 
         Box(
             modifier = Modifier

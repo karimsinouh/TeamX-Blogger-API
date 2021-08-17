@@ -38,5 +38,8 @@ data class Post(
     }
 
     fun asSavedPost():Saved = Saved(title,getThumbnail(),id,published,content,0)
+    fun getLabel(): String {
+        return labels!![0]
+    }
 
 }

@@ -1,6 +1,8 @@
 package com.teamxdevelopers.teamx.ui.viewPost
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -97,6 +99,9 @@ class ViewPostActivity: ComponentActivity() {
                 onBackPressed = { finish() },
                 onSaveChange = {
                     vm.onSave(it)
+                },
+                onShare = {
+                    Toast.makeText(this,"You're in offline mode",Toast.LENGTH_SHORT).show()
                 }
             )
 
@@ -108,10 +113,25 @@ class ViewPostActivity: ComponentActivity() {
                 onBackPressed = { finish() },
                 onSaveChange = {
                     vm.onSave(it)
-                }
+                },
+                onShare = {share()}
             )
         }
     }
+
+
+    private fun share(){
+        vm.post.value?.let {
+            val text="${it.title}\n${it.url}"
+            val sendIntent=Intent().apply {
+                type="text/plain"
+                action=Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT,text)
+            }
+            startActivity(sendIntent)
+        }
+    }
+
 
     @ExperimentalFoundationApi
     @Composable

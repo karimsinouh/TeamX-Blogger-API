@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
@@ -34,15 +35,15 @@ import com.teamxdevelopers.teamx.utils.ChipsList
 fun ViewPostTopBAr(
     saved:Boolean,
     onSaveChange:(Boolean)->Unit,
-    onBackPressed:()->Unit
+    onBackPressed:()->Unit,
+    onShare:()->Unit
 ){
     TopAppBar(
         contentColor= MaterialTheme.colors.onBackground,
         backgroundColor= MaterialTheme.colors.background,
         navigationIcon = { IconButton(onClick = onBackPressed) {
             Icon(Icons.Outlined.ArrowBack,null)
-        }
-        },
+        } },
         title = { Text(text = stringResource(id = R.string.app_name))},
         actions = {
 
@@ -52,6 +53,10 @@ fun ViewPostTopBAr(
                 else
                     Icon(painter = painterResource(id = R.drawable.ic_bookmark_outlined), contentDescription = null)
 
+            }
+
+            IconButton(onClick=onShare){
+                Icon(Icons.Outlined.Share , contentDescription = null)
             }
 
         },
@@ -101,7 +106,9 @@ fun WebComposable(data:String,darkTheme:Boolean){
                         */
             }
         },
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
     )
 }
 

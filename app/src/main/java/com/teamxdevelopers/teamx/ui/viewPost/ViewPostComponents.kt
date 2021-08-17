@@ -1,7 +1,11 @@
 package com.teamxdevelopers.teamx.ui.viewPost
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
+import android.view.KeyEvent
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -66,7 +70,7 @@ fun ViewPostTopBAr(
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebComposable(data:String,darkTheme:Boolean){
+fun WebComposable(data:String,darkTheme:Boolean,returnWebView:(WebView)->Unit){
 
     val color=MaterialTheme.colors.background.toArgb()
 
@@ -80,11 +84,22 @@ fun WebComposable(data:String,darkTheme:Boolean){
                 settings.domStorageEnabled=true
                 settings.loadWithOverviewMode=true
 
-                webViewClient=object : WebViewClient(){}
-                webChromeClient=object : WebChromeClient(){}
+                webViewClient=object : WebViewClient(){
+                    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                        super.onPageStarted(view, url, favicon)
 
+                        if (
+                            url!=null
+                            && !url.contains("googleusercontent")
+                            && url!="about:blank"
+                        ){
+                            val intent=Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            context.startActivity(intent)
+                        }
+                    }
 
-                Log.d("wtf_data",data)
+                }
+
                 val editedData=if(darkTheme)
                     data.replace("white","#121212")
                         .replace("#222222","#ffffff")
@@ -97,13 +112,7 @@ fun WebComposable(data:String,darkTheme:Boolean){
 
                 loadDataWithBaseURL(null,editedData,"text/html", "UTF-8",null)
 
-                /*
-                if(WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK))
-                    if(darkTheme)
-                        setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
-                    else
-                        setForceDark(settings, WebSettingsCompat.FORCE_DARK_AUTO)
-                        */
+                returnWebView(this)
             }
         },
         modifier = Modifier

@@ -2,6 +2,7 @@ package com.teamxdevelopers.teamx.ui.viewPost
 
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,6 +36,7 @@ class ViewPostActivity: ComponentActivity() {
     private var postId:String?=null
     private val vm by viewModels<ViewPostViewModel>()
     private lateinit var adRequest:AdRequest
+    private var webView:WebView?=null
 
     @Inject lateinit var darkTheme: DarkTheme
 
@@ -76,7 +78,9 @@ class ViewPostActivity: ComponentActivity() {
                     }
                 ){
                     if(isSavedPost())
-                        WebComposable(data = savedPost?.content?:"",darkTheme.isEnabled())
+                        WebComposable(data = savedPost?.content?:"",darkTheme.isEnabled()){
+                            webView=it
+                        }
                     else{
                         Content()
                     }
@@ -149,7 +153,9 @@ class ViewPostActivity: ComponentActivity() {
                     if(post==null)
                         CenterProgress()
                     else
-                        WebComposable(data = post.content,darkTheme.isEnabled())
+                        WebComposable(data = post.content,darkTheme.isEnabled()){
+                            webView=it
+                        }
                 }
             }
 
@@ -167,6 +173,19 @@ class ViewPostActivity: ComponentActivity() {
         }
     }
 
+
+    override fun onBackPressed() {
+
+        webView?.let {
+
+            if (it.canGoBack())
+                it.goBack()
+            else
+                finish()
+
+        }
+
+    }
 
     private fun isSavedPost()=savedPost!=null && vm.post.value==null && postId==null
 

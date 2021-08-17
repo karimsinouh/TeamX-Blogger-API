@@ -169,7 +169,7 @@ fun BLogPost(
 }
 
 @Composable
-fun PostThumbnail(url:String,label:String) {
+fun PostThumbnail(url:String,label:String?=null) {
     val imagePainter= rememberCoilPainter(url)
 
     Box(
@@ -184,11 +184,14 @@ fun PostThumbnail(url:String,label:String) {
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
-        Box(modifier = Modifier
-            .padding(8.dp)
-            .align(Alignment.TopStart)){
-            Chip(text = label,colored = true){}
+        if (label!=null){
+            Box(modifier = Modifier
+                .padding(8.dp)
+                .align(Alignment.TopStart)){
+                Chip(text = label,colored = true){}
+            }
         }
+
     }
 
 

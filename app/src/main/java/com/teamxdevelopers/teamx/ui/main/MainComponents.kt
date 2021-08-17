@@ -251,7 +251,7 @@ fun PostPager(
             .clickable(onClick = onClick)
     ){
 
-        PostThumbnail(url = post.getThumbnail(), label = post.getLabel())
+        PostThumbnail(url = post.getThumbnail())
 
         Box(
             modifier = Modifier

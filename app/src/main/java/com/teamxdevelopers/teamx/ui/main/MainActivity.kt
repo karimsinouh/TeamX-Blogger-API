@@ -7,10 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
@@ -157,27 +154,9 @@ class MainActivity : ComponentActivity() {
     @ExperimentalFoundationApi
     @Composable
     private fun Content(){
-        LazyColumn {
-
-
-            //search
-            /*
-            item {
-                Box(modifier = Modifier.padding(8.dp)){
-                    SearchBar(
-                        value = vm.query.value,
-                        onValueChange = {
-                            vm.query.value=it
-                        },
-                        onSearch = {
-                            SearchActivity.open(this@MainActivity,vm.query.value)
-                        }
-                    )
-                }
-            }
-
-             */
-
+        LazyColumn(
+            contentPadding = PaddingValues(bottom = 50.dp)
+        ) {
             val state=vm.state.value
 
                 if (state==ScreenState.LOADING && vm.pageToken==""){
@@ -192,12 +171,7 @@ class MainActivity : ComponentActivity() {
 
                         if (posts.isNotEmpty()){
 
-                            //stickyHeader { StickyHeader("Posts") }
-
                             item { Pager() }
-
-                            //stickyHeader { StickyHeader(text = "Latest Posts") }
-
 
                             itemsIndexed(vm.filteredPosts()){index,item ->
 

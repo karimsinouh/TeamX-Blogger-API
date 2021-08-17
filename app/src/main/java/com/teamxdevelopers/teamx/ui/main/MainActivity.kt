@@ -1,5 +1,7 @@
 package com.teamxdevelopers.teamx.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import com.teamxdevelopers.teamx.R
 import androidx.activity.ComponentActivity
@@ -30,6 +32,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.teamxdevelopers.teamx.data.ScreenState
 import com.teamxdevelopers.teamx.ui.notifications.NotificationsActivity
+import com.teamxdevelopers.teamx.ui.rateDialog.RateDialog
 import com.teamxdevelopers.teamx.ui.saved.SavedActivity
 import com.teamxdevelopers.teamx.ui.search.SearchActivity
 import com.teamxdevelopers.teamx.ui.settings.SettingsActivity
@@ -92,6 +95,13 @@ class MainActivity : ComponentActivity() {
                         else
                             OfflineMessage()
                     }
+
+                    if (vm.showRatingDialog.value){
+                        RateDialog(onRate = { rateApp() }, onExit = { finish() }) {
+                            vm.showRatingDialog.value=false
+                        }
+                    }
+
                 }
             }
         }
@@ -110,6 +120,13 @@ class MainActivity : ComponentActivity() {
                 }
             }
         )
+    }
+
+    private fun rateApp() {
+        val intent=Intent(Intent.ACTION_VIEW)
+        intent.data= Uri.parse("https://play.google.com/store/apps/details?id=com.teamxdevelopers.henamapro")
+        startActivity(intent)
+        finish()
     }
 
     override fun onResume() {
@@ -282,6 +299,10 @@ class MainActivity : ComponentActivity() {
                 SettingsActivity.open(this)
             }
             )
+    }
+
+    override fun onBackPressed() {
+        vm.showRatingDialog.value=true
     }
 
 }

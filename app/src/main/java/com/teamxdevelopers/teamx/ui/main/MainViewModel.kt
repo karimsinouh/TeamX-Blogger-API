@@ -33,6 +33,8 @@ class MainViewModel @Inject constructor(
         darkThemeEnabled.value=darkTheme.isEnabled()
     }
 
+    val showRatingDialog= mutableStateOf(false)
+
     init {
 
         setDarkTheme()

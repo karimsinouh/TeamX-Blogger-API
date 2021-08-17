@@ -10,12 +10,14 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.webkit.WebSettingsCompat
 import com.google.android.gms.ads.AdRequest
@@ -81,9 +83,9 @@ class ViewPostActivity: ComponentActivity() {
                         WebComposable(data = savedPost?.content?:"",darkTheme.isEnabled()){
                             webView=it
                         }
-                    else{
+                    else
                         Content()
-                    }
+
                 }
 
             }
@@ -100,7 +102,7 @@ class ViewPostActivity: ComponentActivity() {
             val saved=vm.exists(savedPost?.postId!!).observeAsState(false)
             ViewPostTopBAr(
                 saved=saved.value,
-                onBackPressed = { finish() },
+                onBackPressed = { onBackPressed()},
                 onSaveChange = {
                     vm.onSave(it)
                 },
@@ -114,7 +116,7 @@ class ViewPostActivity: ComponentActivity() {
             val saved=vm.exists(vm.post.value?.id?:"").observeAsState(false)
             ViewPostTopBAr(
                 saved=saved.value,
-                onBackPressed = { finish() },
+                onBackPressed = { onBackPressed() },
                 onSaveChange = {
                     vm.onSave(it)
                 },
@@ -140,7 +142,9 @@ class ViewPostActivity: ComponentActivity() {
     @ExperimentalFoundationApi
     @Composable
     private fun Content(){
-        LazyColumn{
+        LazyColumn(
+            contentPadding= PaddingValues(bottom = 50.dp)
+        ){
 
             item {
                 vm.post.value?.let {post->
@@ -164,8 +168,10 @@ class ViewPostActivity: ComponentActivity() {
             }
 
             items(vm.posts){item->
-                PostItem(item = item) {
 
+
+                BLogPostSmall(post = item) {
+                    item.view(this@ViewPostActivity)
                 }
                 Divider()
             }

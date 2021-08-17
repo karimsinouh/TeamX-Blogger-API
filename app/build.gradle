@@ -84,10 +84,14 @@ dependencies {
 
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
-    //firebase
+    //firebase cloud messaging
     implementation 'com.google.firebase:firebase-messaging-ktx:22.0.0'
+
+    //firebase analytics
+    implementation 'com.google.firebase:firebase-analytics-ktx:19.0.0'
 
     //ads
     implementation 'com.google.android.gms:play-services-ads:20.2.0'
+
 
 }

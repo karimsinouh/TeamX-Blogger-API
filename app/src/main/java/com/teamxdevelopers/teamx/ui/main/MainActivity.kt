@@ -175,7 +175,7 @@ class MainActivity : ComponentActivity() {
 
                             itemsIndexed(vm.filteredPosts()){index,item ->
 
-                                PostItem(item,posts){
+                                PostItem(item){
                                     interstitial?.show(this@MainActivity)
                                 }
                                 Divider()

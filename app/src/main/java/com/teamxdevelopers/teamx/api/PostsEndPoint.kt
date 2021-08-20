@@ -9,6 +9,7 @@ import com.teamxdevelopers.teamx.data.ResponsePage
 import com.teamxdevelopers.teamx.utils.ConnectivityUtility
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.ktor.client.*
+import io.ktor.client.features.*
 import io.ktor.client.request.*
 import java.io.IOException
 import javax.inject.Inject
@@ -31,6 +32,8 @@ class PostsEndPoint @Inject constructor(
                 listener(response)
             }catch (e:IOException){
                 Log.d("PostsEndPoint",e.message!!)
+            }catch(e: ClientRequestException){
+                Log.d("PostsEndPoint",e.message!!)
             }
 
     }
@@ -44,20 +47,36 @@ class PostsEndPoint @Inject constructor(
                 listener(response.items?: emptyList())
             }catch (e:IOException){
                 Log.d("PostsEndPoint",e.message!!)
+            }catch(e: ClientRequestException){
+                Log.d("PostsEndPoint",e.message!!)
             }
 
     }
 
     suspend fun search(q:String,listener: (List<Post>) -> Unit){
         val url="${BASE_URL}posts/search?q=$q&key=$API_KEY&fetchImages=true"
-        val response=client.get<ResponsePage<Post>>(url)
-        listener(response.items?: emptyList())
+
+        try{
+            val response=client.get<ResponsePage<Post>>(url)
+            listener(response.items?: emptyList())
+        }catch (e:IOException){
+            Log.d("PostsEndPoint",e.message!!)
+        }catch(e: ClientRequestException){
+            Log.d("PostsEndPoint",e.message!!)
+        }
     }
 
     suspend fun getPost(postId:String,listener:(Post)->Unit){
         val url="${BASE_URL}posts/$postId?key=$API_KEY&fetchImages=true"
-        val response=client.get<Post>(url)
-        listener(response)
+
+        try{
+            val response=client.get<Post>(url)
+            listener(response)
+        }catch (e:IOException){
+            Log.d("PostsEndPoint",e.message!!)
+        }catch(e: ClientRequestException){
+            Log.d("PostsEndPoint",e.message!!)
+        }
     }
 
 }
